@@ -1,6 +1,7 @@
 # Pi Pico → Switch 2 SmileBASIC Auto-Typer
 
-Automatically types text and bootstrap programs directly into SmileBASIC on the Switch 2 via low-level USB keyboard emulation.
+Automatically types text and bootstrap programs directly into SmileBASIC on the Switch 2 via low-level USB keyboard emulation. 
+>**NOTE**: the included program.txt is for the 4.4.9 FULL VERSION of smileBASIC. Once there has been enough development to consistently support the demo version I will include that here.
 
 ---
 
