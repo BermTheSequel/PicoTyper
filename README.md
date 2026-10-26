@@ -60,7 +60,6 @@ After the auto-typer finishes typing, switch to **Direct Mode** (press `F4` or t
    ```basic
    REMOVE NSR,&H60000000,&H3FFFFFFF
    ```
-   > [!NOTE]
    > SmileBASIC will display `Out of memory`. This error is **normal and expected** — it indicates the integer overflow bypassed bounds checking. Enter this command only once per session.
 
 3. **Launch the network connection / host RPC:**
@@ -68,28 +67,6 @@ After the auto-typer finishes typing, switch to **Direct Mode** (press `F4` or t
    ```basic
    V=START(...)
    ```
-
----
-
-## How It Works
-
-```
-┌─────────────────┐      Raw USB HID       ┌──────────────────┐
-│  Raspberry Pi   │  Boot Keyboard Reports  │  Nintendo Switch │
-│      Pico       │ ──────────────────────► │  (Docked USB-A)  │
-│                 │      (Report ID 0)      │                  │
-│ • boot.py       │                         │ • SmileBASIC     │
-│ • code.py       │                         │   Editor receives│
-│ • program.txt   │                         │   keystrokes     │
-└─────────────────┘                         └──────────────────┘
-```
-
-Standard CircuitPython uses composite USB devices (Mass Storage + CDC Serial + HID) with Report ID prefixes (`adafruit_hid`), which game consoles ignore or reject.
-
-This implementation overcomes those limitations:
-1. **`boot.py`** strips away the mass storage and CDC serial interfaces, identifies the board as a standard generic `"USB Keyboard"`, and registers an official USB HID Boot Keyboard descriptor (USB HID Specification Appendix B.1).
-2. **`report_ids=(0,)`** ensures keystrokes are transmitted as raw 8-byte packets without any prefix byte, exactly matching a physical hardware USB keyboard.
-3. **`code.py`** reads `program.txt` and converts ASCII characters to HID modifier and scan-code pairs on the fly without relying on external dependencies.
 
 ---
 
